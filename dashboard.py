@@ -1,6 +1,6 @@
 from dash import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Output, Input, State
 import plotly.figure_factory as ff
@@ -9,7 +9,6 @@ import plotly.graph_objects as go
 import numpy as np
 import plotly.express as px
 import calendar
-
 from readData import *
 from timeSeriesPrediction import *
 from dbScan import *
@@ -561,7 +560,7 @@ def update_treemap(slider_value, columns):
     df = combined_data
     df = df[(df['year'] >= slider_value[0]) & (df['year'] <= slider_value[1])]
     df = df.sample(frac=0.1, replace=False, random_state=1)
-    df = df.dropna(axis=0)
+    # df = df.dropna(axis=0)
     for col in columns:
         if df[col].dtype == 'float64':
             df[col] = df[col].astype(int)
@@ -698,8 +697,7 @@ def find_clusters_dbscan(n_clicks, distance, accidents_spots, slider_value, acci
         if cluster_numbers > 0:
             df_clustered = df_clustered[df_clustered['Cluster'] != -1]
             fig = plot_map(df_clustered, color='Y')
-            return [f'{cluster_numbers}', fig, 'Clustering Completed',
-                    df_clustered.to_json(date_format='iso', orient='split')]
+            return [f'{cluster_numbers}', fig, 'Clustering Completed', df_clustered.to_json(date_format='iso', orient='split')]
 
         fig = plot_map(df)
         return ['{}'.format(cluster_numbers), fig, 'Clustering Completed: No Clusters found for given parameters',
