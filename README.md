@@ -2,7 +2,7 @@
 
 <ol>
 <li> Clone the repo.
-<li> Run main.py
+<li> Run dashboard.py
 
 #### Software requirements:  
 dash
